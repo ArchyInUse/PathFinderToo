@@ -33,16 +33,6 @@ namespace PathFinderToo
             DataContext = Vm;
         }
 
-        private void OnMouseEnter(object sender, MouseEventArgs args)
-        {
-            Vm.OnMouseEnter(sender, args);
-        }
-
-        private void OnMouseDown(object sender, MouseEventArgs args)
-        {
-            Vm.OnMouseDown(sender, args);
-        }
-
         private void OnKeyPress(object sender, KeyEventArgs args)
         {
             if (args.Key == Key.Z)

@@ -19,7 +19,11 @@ namespace PathFinderToo.Vm
     public partial class PFViewModel : INotifyPropertyChanged
     {
         public ItemsControl SquaresItemControl { get; set; }
-        public ObservableCollection<Square> SquaresList { get; set; }
+        public ObservableCollection<PFSquare> SquaresList { get; set; }
+
+        // default editing state is Wall
+        // static is for the squares to be able to use this property
+        public static EditingState EditingState { get; set; } = 0;
 
         private Point mousePos;
         public Point MousePos
@@ -37,11 +41,12 @@ namespace PathFinderToo.Vm
         
         public PFViewModel(ItemsControl itemsControl)
         {
-            SquaresList = new ObservableCollection<Square>();
+            SquaresList = new ObservableCollection<PFSquare>();
             SquaresList.SquarePopulate();
             SquaresItemControl = itemsControl;
             SquaresItemControl.MouseDown += PanelMouseDown;
             SquaresItemControl.MouseMove += PanelMouseMove;
+            InitEvents();
         }
 
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")

@@ -15,26 +15,35 @@ namespace PathFinderToo.Logic
     /// <summary>
     /// A class containing extension and helper methods commonly used but not needed in the ViewModel
     /// </summary>
-    public static class Extensions
+    public static class PFExtentions
     {
-        public static void SquarePopulate(this ObservableCollection<Square> panelCollection)
+        public static void SquarePopulate(this ObservableCollection<PFSquare> board)
         {
-            panelCollection.Clear();
+            board.Clear();
             for (int i = 0; i < 53; i++)
             {
                 for (int j = 0; j < 53; j++)
                 {
-                    Rectangle rec = new Rectangle()
-                    {
-                        Fill = new SolidColorBrush(Colors.LightGray),
-                        Height = 15,
-                        Width = 15,
-                        Margin = new Thickness(0.3, 0.3, 0, 0)
-                    };
-
-                    panelCollection.Add(new Square(rec));
+                    board.Add(new PFSquare());
                 }
             }
+        }
+
+        // TODO: Test this
+        public static PFSquare[,] To2D(this ObservableCollection<PFSquare> board)
+        {
+            PFSquare[,] toR = new PFSquare[53, 53];
+            for(int i = 0; i < 53; i++)
+            {
+                int mult = i;
+                if (mult == 0) mult = 1;
+
+                for(int j = 0; j < 53; j++)
+                {
+                    toR[i,j] = board[mult * j];
+                }
+            }
+            return toR;
         }
 
         [DllImport("user32.dll")]

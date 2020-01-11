@@ -2,10 +2,9 @@
 {
     public enum EditingState
     {
-        Walls = 0,
+        Wall = 0,
         StartPoint = 1,
         EndPoint = 2,
-        Bomb = 3,
-
+        Bomb = 3
     }
 }

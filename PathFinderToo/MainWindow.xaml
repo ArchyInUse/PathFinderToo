@@ -25,6 +25,19 @@
             <Run Text="{Binding MousePos.Y, UpdateSourceTrigger=PropertyChanged}"/>
         </TextBlock>
 
+        <StackPanel Grid.Column="1" Grid.Row="1">
+            <TextBlock Text="Editing State"
+                       HorizontalAlignment="Center"/>
+            <ToggleButton Height="100"
+                    Margin="0 10 0 0" Command="{Binding WallButtonClickCommand}">
+                <TextBlock Text="Wall" Foreground="Black"/>
+            </ToggleButton>
+            <ToggleButton Height="100"
+                    Margin="0 10 0 0" Command="{Binding SPButtonClickCommand}">
+                <TextBlock Text="Start Point" Foreground="Black"/>
+            </ToggleButton>
+        </StackPanel>
+
         <ItemsControl x:Name="ItemsPanel" Grid.Row="1" ItemsSource="{Binding SquaresList}" Margin="10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -37,19 +50,18 @@
                     <EventSetter Event="MouseDown" Handler="OnMouseDown"/>
                 </Style>
             </ItemsControl.Resources>-->
-            <i:Interaction.Triggers>
-                <i:EventTrigger EventName="MouseEnter">
-                    <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}" />
-                </i:EventTrigger>
-            </i:Interaction.Triggers>
             <ItemsControl.ItemTemplate>
-                <DataTemplate DataType="{x:Type logic:Square}">
-                    <Border BorderThickness="0">
-                        <Rectangle Width="{Binding Width}"
+                <DataTemplate DataType="{x:Type logic:PFSquare}">
+                    <Rectangle Width="{Binding Width}"
                                Height="{Binding Height}" 
-                               Fill="{Binding Rectangle.Fill, UpdateSourceTrigger=PropertyChanged}" 
-                               Margin="{Binding Rectangle.Margin}"/>
-                    </Border>
+                               Fill="{Binding Fill, UpdateSourceTrigger=PropertyChanged}" 
+                               Margin="{Binding Margin}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Rectangle>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

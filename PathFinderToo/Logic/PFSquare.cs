@@ -8,26 +8,27 @@ using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
+using System.Windows;
 
 namespace PathFinderToo.Logic
 {
-    public partial class Square : INotifyPropertyChanged
+    public partial class PFSquare : INotifyPropertyChanged
     {
-        private Rectangle rectangle;
-        public Rectangle Rectangle
+        private SolidColorBrush fill;
+        public SolidColorBrush Fill
         {
-            get => rectangle;
+            get => fill;
             set
             {
-                rectangle = value;
+                fill = value;
                 NotifyPropertyChanged();
             }
         }
 
         public int Width { get; set; } = 15;
         public int Height { get; set; } = 15;
+        public Thickness Margin { get; set; } = new Thickness(0.3, 0.3, 0, 0);
         public SquareType Type { get; set; }
-        public Command OnMouseEnterCommand { get; set; }
 
         #region INotifyPropertyChanged
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -38,15 +39,10 @@ namespace PathFinderToo.Logic
         public event PropertyChangedEventHandler PropertyChanged;
         #endregion
 
-        public Square(Rectangle rectangle)
+        public PFSquare()
         {
-            Rectangle = rectangle;
-            OnMouseEnterCommand = new Command(OnMouseEnter);
-        }
-
-        private void OnMouseEnter()
-        {
-            Rectangle.Fill = new SolidColorBrush(Colors.Red);
+            Fill = new SolidColorBrush(Colors.LightGray);
+            InitEvents();
         }
     }
 }

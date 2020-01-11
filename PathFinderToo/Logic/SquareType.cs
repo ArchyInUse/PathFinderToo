@@ -2,9 +2,9 @@
 {
     public enum SquareType
     {
-        Empty,
-        Wall,
-        StartPoint,
-        EndPoint
+        Empty = 0,
+        Wall = 1,
+        StartPoint = 2,
+        EndPoint = 3
     }
 }
