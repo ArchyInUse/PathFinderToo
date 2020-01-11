@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PathFinderToo.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PathFinderToo.Vm;
 
 namespace PathFinderToo
 {
@@ -20,9 +22,33 @@ namespace PathFinderToo
     /// </summary>
     public partial class MainWindow : Window
     {
+        public PFViewModel Vm;
+
         public MainWindow()
         {
             InitializeComponent();
+            var window = GetWindow(this);
+            window.KeyDown += OnKeyPress;
+            Vm = new PFViewModel(ItemsPanel);
+            DataContext = Vm;
+        }
+
+        private void OnMouseEnter(object sender, MouseEventArgs args)
+        {
+            Vm.OnMouseEnter(sender, args);
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs args)
+        {
+            Vm.OnMouseDown(sender, args);
+        }
+
+        private void OnKeyPress(object sender, KeyEventArgs args)
+        {
+            if (args.Key == Key.Z)
+            {
+                Vm.ResetBoard();
+            }
         }
     }
 }

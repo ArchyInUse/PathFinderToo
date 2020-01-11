@@ -4,9 +4,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PathFinderToo"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:logic="clr-namespace:PathFinderToo.Logic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="910" Width="910">
+    <Grid Background="#161616">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Foreground="White" FontSize="50">
+            <Run Text="x : "/>
+            <Run Text="{Binding MousePos.X, UpdateSourceTrigger=PropertyChanged}"/>
+            <Run Text=", y : "/>
+            <Run Text="{Binding MousePos.Y, UpdateSourceTrigger=PropertyChanged}"/>
+        </TextBlock>
+
+        <ItemsControl x:Name="ItemsPanel" Grid.Row="1" ItemsSource="{Binding SquaresList}" Margin="10">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.Resources>
+                <Style TargetType="ContentPresenter">
+                    <EventSetter Event="MouseEnter" Handler="OnMouseEnter"/>
+                    <EventSetter Event="MouseDown" Handler="OnMouseDown"/>
+                </Style>
+            </ItemsControl.Resources>-->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseEnter">
+                    <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type logic:Square}">
+                    <Border BorderThickness="0">
+                        <Rectangle Width="{Binding Width}"
+                               Height="{Binding Height}" 
+                               Fill="{Binding Rectangle.Fill, UpdateSourceTrigger=PropertyChanged}" 
+                               Margin="{Binding Rectangle.Margin}"/>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
