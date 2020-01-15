@@ -24,7 +24,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,7 +33,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7.3</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -67,7 +65,6 @@
     <Compile Include="Logic\PFSquare.cs" />
     <Compile Include="Logic\PFSquareEvents.cs" />
     <Compile Include="Logic\SquareType.cs" />
-    <Compile Include="Vm\PFAlgorithms.cs" />
     <Compile Include="Vm\PFVMEvents.cs" />
     <Compile Include="Vm\PFLogic.cs" />
     <Compile Include="Vm\PFViewModel.cs" />

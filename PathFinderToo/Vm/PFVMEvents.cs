@@ -16,7 +16,6 @@ namespace PathFinderToo.Vm
     public partial class PFViewModel : INotifyPropertyChanged
     {
         #region Temporary Events
-        // make these perma events (using commands and interactions)
         public void PanelMouseDown(object sender, MouseButtonEventArgs args)
         {
             MousePos = PFExtentions.GetMousePosition();

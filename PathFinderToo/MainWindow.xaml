@@ -44,6 +44,12 @@
                     <WrapPanel IsItemsHost="True" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.Resources>
+                <Style TargetType="ContentPresenter">
+                    <EventSetter Event="MouseEnter" Handler="OnMouseEnter"/>
+                    <EventSetter Event="MouseDown" Handler="OnMouseDown"/>
+                </Style>
+            </ItemsControl.Resources>-->
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type logic:PFSquare}">
                     <Rectangle Width="{Binding Width}"
@@ -52,10 +58,7 @@
                                Margin="{Binding Margin}">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseEnter">
-                                <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="MouseDown">
-                                <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
+                                <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}" />
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Rectangle>

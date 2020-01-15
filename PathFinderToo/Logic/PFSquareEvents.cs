@@ -29,45 +29,17 @@ namespace PathFinderToo.Logic
 
         private void OnMouseDown()
         {
-            switch (PFViewModel.EditingState)
+            if (PFViewModel.EditingState == EditingState.Wall)
             {
-                case EditingState.Wall:
-                    Fill = new SolidColorBrush(Colors.Black);
-                    Type = SquareType.Wall;
-                    break;
-                case EditingState.StartPoint:
-                    Fill = new SolidColorBrush(Colors.Blue);
-                    Type = SquareType.StartPoint;
-                    if((X,Y) != (StartPoint.X, StartPoint.Y))
-                    {
-                        StartPoint.Type = SquareType.Empty;
-                        StartPoint.Fill = new SolidColorBrush(Colors.LightGray);
-                        StartPoint = this;
-                    }
-                    break;
-                case EditingState.EndPoint:
-                    Fill = new SolidColorBrush(Colors.Green);
-                    Type = SquareType.EndPoint;
-                    if((X,Y) != (EndPoint.X, EndPoint.Y))
-                    {
-                        EndPoint.Type = SquareType.Empty;
-                        EndPoint.Fill = new SolidColorBrush(Colors.LightGray);
-                        EndPoint = this;
-                    }
-                    break;
-                case EditingState.Bomb:
-                    Fill = new SolidColorBrush(Colors.Black);
-                    Type = SquareType.Bomb;
-                    break;
+                Fill = new SolidColorBrush(Colors.Red);
+            } 
+            else if(PFViewModel.EditingState == EditingState.StartPoint)
+            {
+                Fill = new SolidColorBrush(Colors.Blue);
             }
-
-            // if the a start/end point was overwritten, reset them
-            if(PFViewModel.EditingState != EditingState.EndPoint && PFViewModel.EditingState != EditingState.StartPoint)
+            else if(PFViewModel.EditingState == EditingState.EndPoint)
             {
-                if ((X, Y) == (StartPoint.X, StartPoint.Y))
-                    StartPoint = new PFSquare(-1, -1);
-                else if ((X, Y) == (EndPoint.X, EndPoint.Y))
-                    EndPoint = new PFSquare(-1, -1);
+                Fill = new SolidColorBrush(Colors.Green);
             }
         }
     }
