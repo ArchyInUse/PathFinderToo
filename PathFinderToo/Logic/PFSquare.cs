@@ -24,11 +24,38 @@ namespace PathFinderToo.Logic
                 NotifyPropertyChanged();
             }
         }
-
+        
         public int Width { get; set; } = 15;
         public int Height { get; set; } = 15;
         public Thickness Margin { get; set; } = new Thickness(0.3, 0.3, 0, 0);
         public SquareType Type { get; set; }
+        #region Basic Algorithm Components
+        public int X { get; set; }
+        public int Y { get; set; }
+        public bool Visited { get; set; }
+        public static PFSquare StartPoint;
+        public static PFSquare EndPoint;
+        #endregion
+        #region A* Path Finding Algorithm Components
+        /// <summary>
+        /// Distance from starting node
+        /// </summary>
+        public double GCost { get; set; }
+        /// <summary>
+        /// Distance from end node
+        /// </summary>
+        public double HCost { get; set; }
+        /// <summary>
+        /// Distance from starting to end node combined to recieve a general cost of going to that block
+        /// </summary>
+        public int FCost { get
+            {
+                return (int)(GCost * 10) + (int)(HCost * 10);
+            } }
+        #endregion
+        #region Djikstra's Path Finding Algorithm Components
+
+        #endregion
 
         #region INotifyPropertyChanged
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
@@ -43,6 +70,12 @@ namespace PathFinderToo.Logic
         {
             Fill = new SolidColorBrush(Colors.LightGray);
             InitEvents();
+        }
+
+        public PFSquare(int x, int y) : this()
+        {
+            X = x;
+            Y = y;
         }
     }
 }

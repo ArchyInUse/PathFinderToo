@@ -24,9 +24,12 @@ namespace PathFinderToo.Logic
             {
                 for (int j = 0; j < 53; j++)
                 {
-                    board.Add(new PFSquare());
+                    board.Add(new PFSquare(i, j));
                 }
             }
+            
+            PFSquare.EndPoint = new PFSquare(-1, -1);
+            PFSquare.StartPoint = new PFSquare(-1, -1);
         }
 
         // TODO: Test this
