@@ -7,7 +7,8 @@
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         xmlns:logic="clr-namespace:PathFinderToo.Logic"
         mc:Ignorable="d"
-        Title="MainWindow" Height="910" Width="910">
+        Title="MainWindow" Height="910" Width="910"
+        MouseWheel="Window_MouseWheel">
     <Grid Background="#161616">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="800"/>
@@ -18,12 +19,13 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <TextBlock Foreground="White" FontSize="50">
+        <!--<TextBlock Foreground="White" FontSize="50">
             <Run Text="x : "/>
             <Run Text="{Binding MousePos.X, UpdateSourceTrigger=PropertyChanged}"/>
             <Run Text=", y : "/>
             <Run Text="{Binding MousePos.Y, UpdateSourceTrigger=PropertyChanged}"/>
-        </TextBlock>
+        </TextBlock>-->
+        <Slider Name="slider" Value="1" Height="100" Minimum="1"></Slider>
 
         <StackPanel Grid.Column="1">
             <TextBlock Grid.Row="0"
@@ -35,7 +37,7 @@
                 <ComboBoxItem Content="A*" Foreground="Black"/>
             </ComboBox>
         </StackPanel>
-        
+
         <StackPanel Grid.Column="1" Grid.Row="1">
             <TextBlock Text="Editing State"
                        HorizontalAlignment="Center"
@@ -53,11 +55,11 @@
                 <TextBlock Text="End Point" Foreground="Black"/>
             </Button>
         </StackPanel>
-
-        <ItemsControl x:Name="ItemsPanel" Grid.Row="1" ItemsSource="{Binding SquaresList}" Margin="10">
+        <Viewbox x:Name="ZoomViewbox" Height="800" Width="800" Stretch="Fill" Grid.Row="1">
+            <ItemsControl x:Name="ItemsPanel" ItemsSource="{Binding SquaresList}" Margin="10">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <WrapPanel IsItemsHost="True" />
+                    <UniformGrid IsItemsHost="True" Rows="53" Columns="53"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
@@ -81,5 +83,6 @@
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
+        </Viewbox>
     </Grid>
 </Window>

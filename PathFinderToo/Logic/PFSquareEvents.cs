@@ -42,32 +42,32 @@ namespace PathFinderToo.Logic
             switch (PFViewModel.EditingState)
             {
                 case EditingState.Wall:
-                    Fill = new SolidColorBrush(Colors.Black);
                     Type = SquareType.Wall;
+                    Fill = Type.GetColor();
                     break;
                 case EditingState.StartPoint:
-                    Fill = new SolidColorBrush(Colors.Blue);
                     Type = SquareType.StartPoint;
+                    Fill = Type.GetColor();
                     if((X,Y) != (StartPoint.X, StartPoint.Y))
                     {
                         StartPoint.Type = SquareType.Empty;
-                        StartPoint.Fill = new SolidColorBrush(Colors.LightGray);
+                        StartPoint.Fill = Type.GetColor();
                         StartPoint = this;
                     }
                     break;
                 case EditingState.EndPoint:
-                    Fill = new SolidColorBrush(Colors.Green);
                     Type = SquareType.EndPoint;
-                    if((X,Y) != (EndPoint.X, EndPoint.Y))
+                    Fill = Type.GetColor();
+                    if ((X,Y) != (EndPoint.X, EndPoint.Y))
                     {
                         EndPoint.Type = SquareType.Empty;
-                        EndPoint.Fill = new SolidColorBrush(Colors.LightGray);
+                        EndPoint.Fill = Type.GetColor();
                         EndPoint = this;
                     }
                     break;
                 case EditingState.Bomb:
-                    Fill = new SolidColorBrush(Colors.Black);
                     Type = SquareType.Bomb;
+                    Fill = Type.GetColor();
                     break;
             }
 

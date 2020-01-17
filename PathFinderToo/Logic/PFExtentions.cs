@@ -49,6 +49,31 @@ namespace PathFinderToo.Logic
             return toR;
         }
 
+        public static SolidColorBrush GetColor(this SquareType type)
+        {
+            switch(type)
+            {
+                case SquareType.Bomb:
+                    return new SolidColorBrush(Colors.Red);
+                case SquareType.CheckedAndFailedPath:
+                    return new SolidColorBrush(Colors.Orange);
+                case SquareType.CurrentlyChecking:
+                    return new SolidColorBrush(Colors.DarkBlue);
+                case SquareType.CurrentlyCheckingPath:
+                    return new SolidColorBrush(Colors.DarkCyan);
+                case SquareType.Empty:
+                    return new SolidColorBrush(Colors.LightGray);
+                case SquareType.EndPoint:
+                    return new SolidColorBrush(Colors.Turquoise);
+                case SquareType.StartPoint:
+                    return new SolidColorBrush(Colors.Wheat);
+                case SquareType.Wall:
+                    return new SolidColorBrush(Colors.Black);
+                default:
+                    return new SolidColorBrush(Colors.Green);
+            }
+        }
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetCursorPos(ref Win32Point pt);

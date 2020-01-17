@@ -96,5 +96,11 @@ namespace PathFinderToo.Logic
             X = x;
             Y = y;
         }
+
+        public void SetType(SquareType type)
+        {
+            Type = type;
+            Fill = type.GetColor();
+        }
     }
 }

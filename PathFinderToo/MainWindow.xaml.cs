@@ -26,6 +26,7 @@ namespace PathFinderToo
 
         public MainWindow()
         {
+            
             InitializeComponent();
             var window = GetWindow(this);
             window.KeyDown += OnKeyPress;
@@ -38,6 +39,21 @@ namespace PathFinderToo
             if (args.Key == Key.Z)
             {
                 Vm.ResetBoard();
+            }
+        }
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            UpdateViewBox((e.Delta > 0) ? 5 : -5);
+        }
+
+
+        private void UpdateViewBox(int newValue)
+        {
+            if ((ZoomViewbox.Width >= 0) && ZoomViewbox.Height >= 0)
+            {
+                ZoomViewbox.Width += newValue;
+                ZoomViewbox.Height += newValue;
             }
         }
     }
