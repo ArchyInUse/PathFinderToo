@@ -14,21 +14,31 @@ namespace PathFinderToo.Logic
     {
         public Command OnMouseEnterCommand { get; set; }
         public Command OnMouseDownCommand { get; set; }
+        public Command OnMouseRightCommand { get; set; }
 
         private void InitEvents()
         {
             OnMouseEnterCommand = new Command(OnMouseEnter);
             OnMouseDownCommand = new Command(OnMouseDown);
+            OnMouseRightCommand = new Command(OnRightMouseDown);
         }
 
         private void OnMouseEnter()
         {
             if (Mouse.LeftButton == MouseButtonState.Pressed)
                 OnMouseDown();
+            else if (Mouse.RightButton == MouseButtonState.Pressed)
+                OnRightMouseDown();
         }
 
         private void OnMouseDown()
         {
+            if(Mouse.RightButton == MouseButtonState.Pressed)
+            {
+                OnRightMouseDown();
+                return;
+            }
+
             switch (PFViewModel.EditingState)
             {
                 case EditingState.Wall:
@@ -69,6 +79,12 @@ namespace PathFinderToo.Logic
                 else if ((X, Y) == (EndPoint.X, EndPoint.Y))
                     EndPoint = new PFSquare(-1, -1);
             }
+        }
+
+        private void OnRightMouseDown()
+        {
+            Type = SquareType.Empty;
+            Fill = new SolidColorBrush(Colors.LightGray);
         }
     }
 }

@@ -14,8 +14,17 @@ namespace PathFinderToo.Vm
         /// </summary>
         public void DisableAllUIComponents() { }
 
-        public void AStarAlgorithm()
+        public async void AStarAlgorithm()
         {
+            // calculate all costs
+            List<Task> tasks = new List<Task>();
+            foreach(var s in SquaresList)
+            {
+                tasks.Add(Task.Run(s.CalculateCosts));
+            }
+            Task t = Task.WhenAll(tasks);
+            await t;
+
 
         }
     }

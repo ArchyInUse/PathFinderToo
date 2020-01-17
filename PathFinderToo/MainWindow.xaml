@@ -25,17 +25,33 @@
             <Run Text="{Binding MousePos.Y, UpdateSourceTrigger=PropertyChanged}"/>
         </TextBlock>
 
+        <StackPanel Grid.Column="1">
+            <TextBlock Grid.Row="0"
+                       Text="Algorithm"
+                       TextAlignment="Center"
+                       Foreground="White"/>
+
+            <ComboBox Grid.Row="1">
+                <ComboBoxItem Content="A*" Foreground="Black"/>
+            </ComboBox>
+        </StackPanel>
+        
         <StackPanel Grid.Column="1" Grid.Row="1">
             <TextBlock Text="Editing State"
-                       HorizontalAlignment="Center"/>
-            <ToggleButton Height="100"
+                       HorizontalAlignment="Center"
+                       Foreground="White"/>
+            <Button Height="100"
                     Margin="0 10 0 0" Command="{Binding WallButtonClickCommand}">
                 <TextBlock Text="Wall" Foreground="Black"/>
-            </ToggleButton>
-            <ToggleButton Height="100"
+            </Button>
+            <Button Height="100"
                     Margin="0 10 0 0" Command="{Binding SPButtonClickCommand}">
                 <TextBlock Text="Start Point" Foreground="Black"/>
-            </ToggleButton>
+            </Button>
+            <Button Height="100"
+                    Margin="0 10 0 0" Command="{Binding EPButtonClickCommand}">
+                <TextBlock Text="End Point" Foreground="Black"/>
+            </Button>
         </StackPanel>
 
         <ItemsControl x:Name="ItemsPanel" Grid.Row="1" ItemsSource="{Binding SquaresList}" Margin="10">
@@ -56,6 +72,9 @@
                             </i:EventTrigger>
                             <i:EventTrigger EventName="MouseDown">
                                 <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseRightButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OnMouseRightCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Rectangle>
