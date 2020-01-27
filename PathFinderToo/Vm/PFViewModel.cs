@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PathFinderToo.Logic;
+using PathFinderToo.Vm.Algorithms;
 
 namespace PathFinderToo.Vm
 {
@@ -25,13 +26,23 @@ namespace PathFinderToo.Vm
         // static is for the squares to be able to use this property
         public static EditingState EditingState { get; set; } = 0;
 
+        private AlgorithmType selectedAlgorithmType = AlgorithmType.None;
+        public AlgorithmType SelectedAlgorithmType
+        {
+            get => selectedAlgorithmType;
+            set
+            {
+                selectedAlgorithmType = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public static bool SteppedMode = true;
+
         private Point mousePos;
         public Point MousePos
         {
-            get
-            {
-                return mousePos;
-            }
+            get => mousePos;
             set
             {
                 mousePos = value;
@@ -42,7 +53,7 @@ namespace PathFinderToo.Vm
         public PFViewModel(ItemsControl itemsControl)
         {
             SquaresList = new ObservableCollection<PFSquare>();
-            SquaresList.SquarePopulate();
+            SquaresList.ResetBoard();
             SquaresItemControl = itemsControl;
             SquaresItemControl.MouseDown += PanelMouseDown;
             SquaresItemControl.MouseMove += PanelMouseMove;

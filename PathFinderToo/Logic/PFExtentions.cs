@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PathFinderToo.Vm;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace PathFinderToo.Logic
     /// </summary>
     public static class PFExtentions
     {
-        public static void SquarePopulate(this ObservableCollection<PFSquare> board)
+        public static void ResetBoard(this ObservableCollection<PFSquare> board)
         {
             board.Clear();
             for (int i = 0; i < 53; i++)
@@ -53,24 +54,51 @@ namespace PathFinderToo.Logic
         {
             switch(type)
             {
-                case SquareType.Bomb:
-                    return new SolidColorBrush(Colors.Red);
-                case SquareType.CheckedAndFailedPath:
-                    return new SolidColorBrush(Colors.Orange);
-                case SquareType.CurrentlyChecking:
-                    return new SolidColorBrush(Colors.DarkBlue);
-                case SquareType.CurrentlyCheckingPath:
-                    return new SolidColorBrush(Colors.DarkCyan);
                 case SquareType.Empty:
                     return new SolidColorBrush(Colors.LightGray);
                 case SquareType.EndPoint:
-                    return new SolidColorBrush(Colors.Turquoise);
                 case SquareType.StartPoint:
-                    return new SolidColorBrush(Colors.Wheat);
+                    return new SolidColorBrush(Colors.Turquoise);
                 case SquareType.Wall:
                     return new SolidColorBrush(Colors.Black);
                 default:
                     return new SolidColorBrush(Colors.Green);
+            }
+        }
+
+        public static SquareType GetTypeFromVisual(this VisualSquareType type)
+        {
+            switch(type)
+            {
+                case VisualSquareType.Empty:
+                case VisualSquareType.Visited:
+                case VisualSquareType.Sorrounding:
+                    return SquareType.Empty;
+                case VisualSquareType.Bomb:
+                    return SquareType.Bomb;
+                case VisualSquareType.Wall:
+                    return SquareType.Wall;
+                default:
+                    return SquareType.Empty;
+            }
+        }
+
+        public static SolidColorBrush GetColor(this VisualSquareType type)
+        {
+            switch(type)
+            {
+                case VisualSquareType.Empty:
+                    return new SolidColorBrush(Colors.LightGray);
+                case VisualSquareType.Wall:
+                    return new SolidColorBrush(Colors.Black);
+                case VisualSquareType.Visited:
+                    return new SolidColorBrush(Colors.Red);
+                case VisualSquareType.Sorrounding:
+                    return new SolidColorBrush(Colors.Green);
+                case VisualSquareType.StartEndPoint:
+                    return new SolidColorBrush(Colors.Cyan);
+                default:
+                    return new SolidColorBrush(Colors.Turquoise);
             }
         }
 

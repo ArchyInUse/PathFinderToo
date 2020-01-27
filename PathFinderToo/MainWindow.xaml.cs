@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PathFinderToo.Vm;
+using System.Threading;
 
 namespace PathFinderToo
 {
@@ -23,10 +24,10 @@ namespace PathFinderToo
     public partial class MainWindow : Window
     {
         public PFViewModel Vm;
+        public Thread CurrentThread;
 
         public MainWindow()
         {
-            
             InitializeComponent();
             var window = GetWindow(this);
             window.KeyDown += OnKeyPress;
@@ -34,27 +35,23 @@ namespace PathFinderToo
             DataContext = Vm;
         }
 
-        private void OnKeyPress(object sender, KeyEventArgs args)
+        private async void OnKeyPress(object sender, KeyEventArgs args)
         {
             if (args.Key == Key.Z)
             {
-                Vm.ResetBoard();
+                await Task.Run(Vm.SquaresList.ResetBoard);
+            }
+            else if (args.Key == Key.Enter)
+            {
+            }
+            else if (args.Key == Key.A)
+            {
+                await Vm.AStarAlgorithmAsync();
             }
         }
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            UpdateViewBox((e.Delta > 0) ? 5 : -5);
-        }
-
-
-        private void UpdateViewBox(int newValue)
-        {
-            if ((ZoomViewbox.Width >= 0) && ZoomViewbox.Height >= 0)
-            {
-                ZoomViewbox.Width += newValue;
-                ZoomViewbox.Height += newValue;
-            }
         }
     }
 }

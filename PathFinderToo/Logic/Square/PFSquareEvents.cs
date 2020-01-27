@@ -43,31 +43,31 @@ namespace PathFinderToo.Logic
             {
                 case EditingState.Wall:
                     Type = SquareType.Wall;
-                    Fill = Type.GetColor();
+                    VisualType = VisualSquareType.Wall;
                     break;
                 case EditingState.StartPoint:
                     Type = SquareType.StartPoint;
-                    Fill = Type.GetColor();
+                    VisualType = VisualSquareType.StartEndPoint;
                     if((X,Y) != (StartPoint.X, StartPoint.Y))
                     {
                         StartPoint.Type = SquareType.Empty;
-                        StartPoint.Fill = Type.GetColor();
+                        StartPoint.VisualType = VisualSquareType.Empty;
                         StartPoint = this;
                     }
                     break;
                 case EditingState.EndPoint:
                     Type = SquareType.EndPoint;
-                    Fill = Type.GetColor();
+                    VisualType = VisualSquareType.StartEndPoint;
                     if ((X,Y) != (EndPoint.X, EndPoint.Y))
                     {
                         EndPoint.Type = SquareType.Empty;
-                        EndPoint.Fill = Type.GetColor();
+                        EndPoint.VisualType = VisualSquareType.Empty;
                         EndPoint = this;
                     }
                     break;
                 case EditingState.Bomb:
                     Type = SquareType.Bomb;
-                    Fill = Type.GetColor();
+                    VisualType = VisualSquareType.Bomb;
                     break;
             }
 

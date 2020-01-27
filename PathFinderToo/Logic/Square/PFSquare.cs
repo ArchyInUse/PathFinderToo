@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Windows;
+using PathFinderToo.Vm;
 
 namespace PathFinderToo.Logic
 {
@@ -29,6 +30,18 @@ namespace PathFinderToo.Logic
         public int Height { get; set; } = 15;
         public Thickness Margin { get; set; } = new Thickness(0.3, 0.3, 0, 0);
         public SquareType Type { get; set; }
+
+        private VisualSquareType visualType;
+        public VisualSquareType VisualType
+        {
+            get => visualType;
+            set
+            {
+                visualType = value;
+                NotifyPropertyChanged();
+            }
+        }
+
         #region Basic Algorithm Components
 
         public int X { get; set; }
@@ -38,6 +51,7 @@ namespace PathFinderToo.Logic
         public static PFSquare EndPoint;
 
         #endregion
+
         #region A* Path Finding Algorithm Components
 
         /// Distance from starting node
@@ -72,17 +86,20 @@ namespace PathFinderToo.Logic
         }
 
         #endregion
+        
         #region Djikstra's Path Finding Algorithm Components
 
         #endregion
 
         #region INotifyPropertyChanged
+
         private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
         #endregion
 
         public PFSquare()
@@ -97,9 +114,35 @@ namespace PathFinderToo.Logic
             Y = y;
         }
 
+        #region Overrides
+
+        public static bool operator==(PFSquare p1, PFSquare p2)
+        {
+            return (p1.X, p1.Y) == (p2.X, p2.Y);
+        }
+
+        public static bool operator !=(PFSquare p1, PFSquare p2) => !(p1 == p2);
+
+        public override bool Equals(object obj)
+        {
+            if(obj is PFSquare toCompare)
+                return toCompare == this;
+            return false;
+        }
+
+        public override int GetHashCode() => base.GetHashCode();
+
+        public override string ToString() => $"({X}, {Y}) with FCost {FCost}";
+
+        #endregion
+
         public void SetType(SquareType type)
         {
             Type = type;
+        }
+
+        public void SetVisualType(VisualSquareType type)
+        {
             Fill = type.GetColor();
         }
     }

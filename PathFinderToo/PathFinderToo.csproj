@@ -62,15 +62,20 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
-    <Compile Include="Logic\EditingState.cs" />
+    <Compile Include="Vm\Algorithms\AlgorithmType.cs" />
+    <Compile Include="Vm\Visual\EditingState.cs" />
     <Compile Include="Logic\PFExtentions.cs" />
-    <Compile Include="Logic\PFSquare.cs" />
-    <Compile Include="Logic\PFSquareEvents.cs" />
-    <Compile Include="Logic\SquareType.cs" />
-    <Compile Include="Vm\PFAlgorithms.cs" />
+    <Compile Include="Logic\Square\PFSquare.cs" />
+    <Compile Include="Logic\Square\PFSquareEvents.cs" />
+    <Compile Include="Logic\Square\SquareComparer.cs" />
+    <Compile Include="Logic\Square\SquareType.cs" />
+    <Compile Include="Vm\Converters\StringToAlgorithmConverter.cs" />
+    <Compile Include="Vm\Converters\VisualTypeToFillConverter.cs" />
+    <Compile Include="Vm\Algorithms\PFAlgorithms.cs" />
     <Compile Include="Vm\PFVMEvents.cs" />
-    <Compile Include="Vm\PFLogic.cs" />
     <Compile Include="Vm\PFViewModel.cs" />
+    <Compile Include="Vm\Algorithms\AlgorithmState.cs" />
+    <Compile Include="Vm\VisualSquareType.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

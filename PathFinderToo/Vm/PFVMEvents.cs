@@ -28,6 +28,7 @@ namespace PathFinderToo.Vm
         }
         #endregion
 
+        public Command StartButtonClickCommand { get; set; }
         public Command WallButtonClickCommand { get; set; }
         // SP stands for Start Point
         public Command SPButtonClickCommand { get; set; }
@@ -39,10 +40,19 @@ namespace PathFinderToo.Vm
             WallButtonClickCommand = new Command(WallButtonClick);
             SPButtonClickCommand = new Command(SPButtonClick);
             EPButtonClickCommand = new Command(EPButtonClick);
+            StartButtonClickCommand = new Command(AlgorithmButtonClick);
         }
 
         private void WallButtonClick() => EditingState = EditingState.Wall;
         private void SPButtonClick() => EditingState = EditingState.StartPoint;
         private void EPButtonClick() => EditingState = EditingState.EndPoint;
+        private async void AlgorithmButtonClick()
+        {
+            if(PFSquare.StartPoint.X == -1 || PFSquare.EndPoint.Y == -1)
+            {
+                throw new Exception("Endpoint or Startpoint not set.");
+            }
+            await AStarAlgorithmAsync();
+        }
     }
 }
