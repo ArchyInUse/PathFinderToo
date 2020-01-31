@@ -31,6 +31,7 @@ namespace PathFinderToo.Vm
             while(!solved)
             {
                 await AStarAlgorithmSteppedAsync(CurrentState);
+                await Task.Delay(100);
             }
         }
 
@@ -39,7 +40,6 @@ namespace PathFinderToo.Vm
 
         public async Task AStarAlgorithmSteppedAsync(AlgorithmState last = null)
         {
-            Debug.WriteLine("A* called");
             // first time check
             if (last is null)
             {
@@ -66,31 +66,41 @@ namespace PathFinderToo.Vm
             Debug.WriteLine($"Last checked square is not the endpoint, continue");
 
             // calculate current square
-            PFSquare currentlyChecking = GetLowestFCostSquare(last.Available);
+            PFSquare currentlyChecking = last.Available[0];
             Debug.WriteLine($"Currently checking the square {currentlyChecking}");
             
             currentlyChecking.Visited = true;
-            last.Available.Remove(currentlyChecking);
-            Debug.WriteLine($"Removing currently checking square");
-            //if(currentlyChecking != PFSquare.StartPoint && currentlyChecking != PFSquare.EndPoint)
             last.CurrentlyChecking.VisualType = VisualSquareType.Visited;
 
             // could be wrapped
             List<PFSquare> sorroundings = await CalculateSquareSorroundings(currentlyChecking);
-            Debug.WriteLine($"Got sorroundings of {currentlyChecking}");
+            Debug.WriteLine($"Got sorroundings of {currentlyChecking}:");
             sorroundings = RemoveVisited(sorroundings);
+            OutputSquaresList(sorroundings);
             Debug.WriteLine($"Removed visited squares");
+            last.Available.Remove(currentlyChecking);
+            last.Available = last.Available.Distinct(new AStarSquareComparer()).ToList();
             
             var newAvailable = new List<PFSquare>(last.Available);
             newAvailable.AddRange(sorroundings);
+            RemoveVisited(newAvailable);
+            newAvailable.Sort(new AStarSquareComparer());
             Debug.WriteLine($"Added last's sorroundings and removed all visited.");
             CurrentState = new AlgorithmState(SquaresList, newAvailable, currentlyChecking, last);
             States.Add(CurrentState);
             Debug.WriteLine("");
-            Debug.WriteLine(CurrentState);
+            Debug.WriteLine($"CurrentAmountOfSquares = {newAvailable.Count}");
         }
 
         #region Helpers
+
+        private void OutputSquaresList(List<PFSquare> Sorroundings)
+        {
+            foreach(var s in Sorroundings)
+            {
+                Debug.WriteLine(s);
+            }
+        }
 
         private bool SquareIsWalkable(PFSquare s) => s.Type != SquareType.Bomb && s.Type != SquareType.Wall;
         
@@ -108,19 +118,6 @@ namespace PathFinderToo.Vm
         }
 
         #region A*
-
-        private PFSquare GetLowestFCostSquare(List<PFSquare> list)
-        {
-            PFSquare currMin = list[0];
-
-            foreach(var square in list)
-            {
-                if (currMin.FCost > square.FCost)
-                    currMin = square;
-            }
-
-            return currMin;
-        }
 
         // TODO: update UI components affected (put it in Calculate function for each of the squares)
         private async Task<List<PFSquare>> CalculateSquareSorroundings(PFSquare square)
@@ -150,7 +147,7 @@ namespace PathFinderToo.Vm
                 {
                     toCheck.Remove(t);
                 }
-                else if (!SquareIsWalkable(SquaresList[t.Item1 * t.Item2]))
+                else if (!SquareIsWalkable(SquaresList[t.Item1 * 53 + t.Item2]))
                 {
                     toCheck.Remove(t);
                 }
@@ -168,12 +165,6 @@ namespace PathFinderToo.Vm
             await Task.WhenAll(tasks);
             return toR;
         }
-
-        /// <summary>
-        /// Sorts the sorroundings list so that it will be sorted by lowest FCost
-        /// </summary>
-        /// <param name="sorroundings">list of nodes</param>
-        /// <returns></returns>
 
         #endregion
 
