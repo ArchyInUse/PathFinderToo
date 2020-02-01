@@ -52,8 +52,8 @@ namespace PathFinderToo.Vm
             {
                 throw new Exception("Endpoint or Startpoint not set.");
             }
-            //await AStarAlgorithmSteppedAsync(CurrentState);
-            await AStarAlgorithmAsync();
+            await AStarAlgorithmSteppedAsync(CurrentState);
+            //await AStarAlgorithmAsync();
         }
     }
 }

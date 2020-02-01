@@ -31,13 +31,14 @@ namespace PathFinderToo.Vm
             while(!solved)
             {
                 await AStarAlgorithmSteppedAsync(CurrentState);
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
         }
 
         private AlgorithmState CurrentState = null;
         private ObservableCollection<AlgorithmState> States = new ObservableCollection<AlgorithmState>();
 
+        // TODO: fix code quality
         public async Task AStarAlgorithmSteppedAsync(AlgorithmState last = null)
         {
             // first time check
@@ -70,7 +71,6 @@ namespace PathFinderToo.Vm
             Debug.WriteLine($"Currently checking the square {currentlyChecking}");
             
             currentlyChecking.Visited = true;
-            last.CurrentlyChecking.VisualType = VisualSquareType.Visited;
 
             // could be wrapped
             List<PFSquare> sorroundings = await CalculateSquareSorroundings(currentlyChecking);
@@ -88,6 +88,7 @@ namespace PathFinderToo.Vm
             Debug.WriteLine($"Added last's sorroundings and removed all visited.");
             CurrentState = new AlgorithmState(SquaresList, newAvailable, currentlyChecking, last);
             States.Add(CurrentState);
+            last.CurrentlyChecking.VisualType = VisualSquareType.Visited;
             Debug.WriteLine("");
             Debug.WriteLine($"CurrentAmountOfSquares = {newAvailable.Count}");
         }
@@ -161,6 +162,8 @@ namespace PathFinderToo.Vm
                 if(curr.VisualType != VisualSquareType.StartEndPoint && curr.VisualType != VisualSquareType.Visited)
                     curr.VisualType = VisualSquareType.Sorrounding;
             }
+
+            SquaresList[x * 53 + y].VisualType = VisualSquareType.Visited;
 
             await Task.WhenAll(tasks);
             return toR;

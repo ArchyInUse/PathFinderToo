@@ -43,6 +43,7 @@ namespace PathFinderToo
             }
             else if (args.Key == Key.Enter)
             {
+                await Vm.AStarAlgorithmAsync();
             }
             else if (args.Key == Key.A)
             {
