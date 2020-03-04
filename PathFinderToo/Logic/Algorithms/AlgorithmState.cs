@@ -6,19 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PathFinderToo.Vm.Algorithms
+namespace PathFinderToo.Logic.Algorithms
 {
     /// <summary>
     /// this class represents the current history of the board to allow cycling through states and to allow stepped mode
     /// </summary>
     public class AlgorithmState
     {
-        public ObservableCollection<PFSquare> Squares { get; set; }
-        public List<PFSquare> Available { get; set; }
-        public PFSquare CurrentlyChecking { get; set; }
+        public ObservableCollection<PFNode> Squares { get; set; }
+        public List<PFNode> Available { get; set; }
+        public PFNode CurrentlyChecking { get; set; }
         public AlgorithmState Last { get; set; }
 
-        public AlgorithmState(ObservableCollection<PFSquare> squares, List<PFSquare> available, PFSquare currentlyChecking, AlgorithmState last)
+        public AlgorithmState(ObservableCollection<PFNode> squares, List<PFNode> available, PFNode currentlyChecking, AlgorithmState last)
         {
             Squares = squares;
             CurrentlyChecking = currentlyChecking;

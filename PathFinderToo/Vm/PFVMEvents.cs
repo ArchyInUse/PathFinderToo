@@ -48,12 +48,12 @@ namespace PathFinderToo.Vm
         private void EPButtonClick() => EditingState = EditingState.EndPoint;
         private async void AlgorithmButtonClick()
         {
-            if(PFSquare.StartPoint.X == -1 || PFSquare.EndPoint.Y == -1)
+            if(PFNode.StartPoint.X == -1 || PFNode.EndPoint.Y == -1)
             {
                 throw new Exception("Endpoint or Startpoint not set.");
             }
-            await AStarAlgorithmSteppedAsync(CurrentState);
-            //await AStarAlgorithmAsync();
+            //await AStarAlgorithmSteppedAsync(CurrentState);
+            await AStarAlgorithmAsync();
         }
     }
 }

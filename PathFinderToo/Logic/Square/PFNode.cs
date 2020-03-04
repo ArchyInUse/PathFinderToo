@@ -13,7 +13,7 @@ using PathFinderToo.Vm;
 
 namespace PathFinderToo.Logic
 {
-    public partial class PFSquare : INotifyPropertyChanged
+    public partial class PFNode : INotifyPropertyChanged
     {
         private SolidColorBrush fill;
         public SolidColorBrush Fill
@@ -47,8 +47,8 @@ namespace PathFinderToo.Logic
         public int X { get; set; }
         public int Y { get; set; }
         public bool Visited { get; set; }
-        public static PFSquare StartPoint;
-        public static PFSquare EndPoint;
+        public static PFNode StartPoint;
+        public static PFNode EndPoint;
 
         #endregion
 
@@ -65,23 +65,38 @@ namespace PathFinderToo.Logic
             {
                 return (int)(GCost * 10) + (int)(HCost * 10);
             } }
-
-        public void CalculateCosts()
+        
+        public void AStarCalculateCosts()
         {
-            if (StartPoint.X == -1)
-                return;
-            GCost = Distance(this, StartPoint);
-            HCost = Distance(this, EndPoint);
+            GCost = CalculateGCost();
+            HCost = CalculateHCost();
+        }
+        
+        public void DjikstrasCalculateCosts()
+        {
+            GCost = 0;
+            HCost = CalculateHCost();
         }
 
-        private double Distance(PFSquare p1, PFSquare p2)
+        // this temporarily returns 0 while I figure out how to correctly calculate a path between this point and the 
+        private double CalculateGCost()
         {
-            var x1 = p1.X;
-            var x2 = p2.X;
-            var y1 = p1.Y;
-            var y2 = p2.Y;
+            return 0;
+        }
 
-            // distance = sqrt((x2-x1)^2 + (y2-y1)^2)
+        private double CalculateHCost()
+        {
+            var x1 = EndPoint.X;
+            var x2 = X;
+            var y1 = EndPoint.Y;
+            var y2 = Y;
+
+            return Distance(x1, x2, y1, y2);
+            
+        }
+
+        private double Distance(double x1, double x2, double y1, double y2)
+        {
             return Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
         }
 
@@ -102,13 +117,13 @@ namespace PathFinderToo.Logic
 
         #endregion
 
-        public PFSquare()
+        public PFNode()
         {
             Fill = new SolidColorBrush(Colors.LightGray);
             InitEvents();
         }
 
-        public PFSquare(int x, int y) : this()
+        public PFNode(int x, int y) : this()
         {
             X = x;
             Y = y;
@@ -116,16 +131,16 @@ namespace PathFinderToo.Logic
 
         #region Overrides
 
-        public static bool operator==(PFSquare p1, PFSquare p2)
+        public static bool operator==(PFNode p1, PFNode p2)
         {
             return (p1.X, p1.Y) == (p2.X, p2.Y);
         }
 
-        public static bool operator !=(PFSquare p1, PFSquare p2) => !(p1 == p2);
+        public static bool operator !=(PFNode p1, PFNode p2) => !(p1 == p2);
 
         public override bool Equals(object obj)
         {
-            if(obj is PFSquare toCompare)
+            if(obj is PFNode toCompare)
                 return toCompare == this;
             return false;
         }

@@ -18,25 +18,25 @@ namespace PathFinderToo.Logic
     /// </summary>
     public static class PFExtentions
     {
-        public static void ResetBoard(this ObservableCollection<PFSquare> board)
+        public static void ResetBoard(this ObservableCollection<PFNode> board)
         {
-            board.Clear();
+            MainWindow.UiCtx.Send(x => board.Clear(), null);
             for (int i = 0; i < 53; i++)
             {
                 for (int j = 0; j < 53; j++)
                 {
-                    board.Add(new PFSquare(i, j));
+                    MainWindow.UiCtx.Send(x => board.Add(new PFNode(i, j)), null);
                 }
             }
             
-            PFSquare.EndPoint = new PFSquare(-1, -1);
-            PFSquare.StartPoint = new PFSquare(-1, -1);
+            PFNode.EndPoint = new PFNode(-1, -1);
+            PFNode.StartPoint = new PFNode(-1, -1);
         }
 
         // TODO: Test this
-        public static PFSquare[,] To2D(this ObservableCollection<PFSquare> board)
+        public static PFNode[,] To2D(this ObservableCollection<PFNode> board)
         {
-            PFSquare[,] toR = new PFSquare[53, 53];
+            PFNode[,] toR = new PFNode[53, 53];
             for(int i = 0; i < 53; i++)
             {
                 int mult = i;
@@ -100,6 +100,20 @@ namespace PathFinderToo.Logic
                 default:
                     return new SolidColorBrush(Colors.Turquoise);
             }
+        }
+
+        public static List<T> From<T>(this List<T> list, int startIndex, int endIndex = -1)
+        {
+            if (endIndex == -1) endIndex = list.Count;
+            if (startIndex > list.Count) throw new ArgumentException();
+            List<T> returnValue = new List<T>();
+
+            for(; startIndex < endIndex; startIndex++)
+            {
+                returnValue.Add(list[startIndex]);
+            }
+
+            return returnValue;
         }
 
         [DllImport("user32.dll")]

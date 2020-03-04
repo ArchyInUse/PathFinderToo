@@ -24,10 +24,11 @@ namespace PathFinderToo
     public partial class MainWindow : Window
     {
         public PFViewModel Vm;
-        public Thread CurrentThread;
+        public static SynchronizationContext UiCtx;
 
         public MainWindow()
         {
+            UiCtx = SynchronizationContext.Current;
             InitializeComponent();
             var window = GetWindow(this);
             window.KeyDown += OnKeyPress;

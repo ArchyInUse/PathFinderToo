@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using PathFinderToo.Logic;
 using System.Windows.Controls;
-using PathFinderToo.Vm.Algorithms;
+using PathFinderToo.Logic.Algorithms;
 
 namespace PathFinderToo.Vm.Converters
 {

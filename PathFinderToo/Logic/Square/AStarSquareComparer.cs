@@ -10,13 +10,13 @@ namespace PathFinderToo.Logic
     /// <summary>
     /// this class sorts squares by their FCost
     /// </summary>
-    public class AStarSquareComparer : IComparer<PFSquare>, IEqualityComparer<PFSquare>
+    public class AStarSquareComparer : IComparer<PFNode>, IEqualityComparer<PFNode>
     {
-        public bool Equals(PFSquare x, PFSquare y) => x == y;
+        public bool Equals(PFNode x, PFNode y) => x == y;
 
-        public int GetHashCode(PFSquare obj) => HashCode.Combine(obj.X, obj.Y);
+        public int GetHashCode(PFNode obj) => HashCode.Combine(obj.X, obj.Y);
 
-        int IComparer<PFSquare>.Compare(PFSquare x, PFSquare y)
+        int IComparer<PFNode>.Compare(PFNode x, PFNode y)
         {
             if (x == y)
                 return 0;

@@ -1,4 +1,4 @@
-﻿namespace PathFinderToo.Vm.Algorithms
+﻿namespace PathFinderToo.Logic.Algorithms
 {
     public enum AlgorithmType
     {

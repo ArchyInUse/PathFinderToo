@@ -10,7 +10,7 @@ using PathFinderToo.Vm;
 
 namespace PathFinderToo.Logic
 {
-    public partial class PFSquare : INotifyPropertyChanged
+    public partial class PFNode : INotifyPropertyChanged
     {
         public Command OnMouseEnterCommand { get; set; }
         public Command OnMouseDownCommand { get; set; }
@@ -75,9 +75,9 @@ namespace PathFinderToo.Logic
             if(PFViewModel.EditingState != EditingState.EndPoint && PFViewModel.EditingState != EditingState.StartPoint)
             {
                 if ((X, Y) == (StartPoint.X, StartPoint.Y))
-                    StartPoint = new PFSquare(-1, -1);
+                    StartPoint = new PFNode(-1, -1);
                 else if ((X, Y) == (EndPoint.X, EndPoint.Y))
-                    EndPoint = new PFSquare(-1, -1);
+                    EndPoint = new PFNode(-1, -1);
             }
         }
 

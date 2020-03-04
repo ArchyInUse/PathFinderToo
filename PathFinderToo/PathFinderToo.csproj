@@ -65,19 +65,21 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
-    <Compile Include="Vm\Algorithms\AlgorithmType.cs" />
+    <Compile Include="Logic\Algorithms\AlgorithmType.cs" />
+    <Compile Include="Logic\Algorithms\AStarAvailabilityList.cs" />
+    <Compile Include="Logic\Algorithms\IAlgorithmicList.cs" />
     <Compile Include="Vm\Visual\EditingState.cs" />
     <Compile Include="Logic\PFExtentions.cs" />
-    <Compile Include="Logic\Square\PFSquare.cs" />
-    <Compile Include="Logic\Square\PFSquareEvents.cs" />
+    <Compile Include="Logic\Square\PFNode.cs" />
+    <Compile Include="Logic\Square\PFNodeEvents.cs" />
     <Compile Include="Logic\Square\AStarSquareComparer.cs" />
     <Compile Include="Logic\Square\SquareType.cs" />
     <Compile Include="Vm\Converters\StringToAlgorithmConverter.cs" />
     <Compile Include="Vm\Converters\VisualTypeToFillConverter.cs" />
-    <Compile Include="Vm\Algorithms\PFAlgorithms.cs" />
+    <Compile Include="Logic\Algorithms\PFAlgorithms.cs" />
     <Compile Include="Vm\PFVMEvents.cs" />
     <Compile Include="Vm\PFViewModel.cs" />
-    <Compile Include="Vm\Algorithms\AlgorithmState.cs" />
+    <Compile Include="Logic\Algorithms\AlgorithmState.cs" />
     <Compile Include="Vm\VisualSquareType.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

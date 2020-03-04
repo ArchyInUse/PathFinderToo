@@ -13,14 +13,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PathFinderToo.Logic;
-using PathFinderToo.Vm.Algorithms;
+using PathFinderToo.Logic.Algorithms;
 
 namespace PathFinderToo.Vm
 {
     public partial class PFViewModel : INotifyPropertyChanged
     {
         public ItemsControl SquaresItemControl { get; set; }
-        public ObservableCollection<PFSquare> SquaresList { get; set; }
+        public ObservableCollection<PFNode> SquaresList { get; set; }
 
         // default editing state is Wall
         // static is for the squares to be able to use this property
@@ -52,7 +52,7 @@ namespace PathFinderToo.Vm
         
         public PFViewModel(ItemsControl itemsControl)
         {
-            SquaresList = new ObservableCollection<PFSquare>();
+            SquaresList = new ObservableCollection<PFNode>();
             SquaresList.ResetBoard();
             SquaresItemControl = itemsControl;
             SquaresItemControl.MouseDown += PanelMouseDown;
