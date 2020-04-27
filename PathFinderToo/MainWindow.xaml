@@ -50,6 +50,25 @@
                 <ComboBoxItem Content="A*" Foreground="Black"/>
                 <ComboBoxItem Content="Djikstra's" Foreground="Black"/>
             </ComboBox>
+            <TextBlock Grid.Row="2" 
+                       Text="Step:"
+                       Foreground="White"
+                       TextAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <!-- &lt; == < -->
+                <Button Content="&lt;&lt;"/>
+                <TextBox IsEnabled="False" 
+                         Text="0"
+                         TextAlignment="Center"
+                         Grid.Column="1"/>
+                <Button Content=">>"
+                        Grid.Column="2"/>
+            </Grid>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1">

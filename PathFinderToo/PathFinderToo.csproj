@@ -66,8 +66,6 @@
     </ApplicationDefinition>
     <Compile Include="Command.cs" />
     <Compile Include="Logic\Algorithms\AlgorithmType.cs" />
-    <Compile Include="Logic\Algorithms\AStarAvailabilityList.cs" />
-    <Compile Include="Logic\Algorithms\IAlgorithmicList.cs" />
     <Compile Include="Vm\Visual\EditingState.cs" />
     <Compile Include="Logic\PFExtentions.cs" />
     <Compile Include="Logic\Square\PFNode.cs" />

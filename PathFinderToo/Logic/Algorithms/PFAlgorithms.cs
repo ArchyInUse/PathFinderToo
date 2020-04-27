@@ -54,8 +54,6 @@ namespace PathFinderToo.Vm
             }
             else
             {
-                PFNode.StartPoint.VisualType = VisualSquareType.StartEndPoint;
-                PFNode.EndPoint.VisualType = VisualSquareType.StartEndPoint;
                 last = CurrentState;
             }
             // end condition
