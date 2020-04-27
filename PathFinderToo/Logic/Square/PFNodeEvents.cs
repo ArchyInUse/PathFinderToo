@@ -84,7 +84,7 @@ namespace PathFinderToo.Logic
         private void OnRightMouseDown()
         {
             Type = SquareType.Empty;
-            Fill = new SolidColorBrush(Colors.LightGray);
+            VisualType = VisualSquareType.Empty;
         }
     }
 }

@@ -38,21 +38,19 @@ namespace PathFinderToo.Vm
             }
         }
 
+        /* IGNORE FOR NOW */
         private AlgorithmState CurrentState = null;
         private ObservableCollection<AlgorithmState> States = new ObservableCollection<AlgorithmState>();
-
-        // TODO: fix code quality
+        
         public async Task AStarAlgorithmSteppedAsync(AlgorithmState last = null)
         {
             // first time check
             if (last is null)
             {
-                Debug.WriteLine("First time run");
                 last = new AlgorithmState(SquaresList, new List<PFNode>() { PFNode.StartPoint }, PFNode.StartPoint, null);
                 Debug.WriteLine($"Last:{Environment.NewLine}{last}");
                 PFNode.StartPoint.Visited = true;
                 States.Add(CurrentState);
-                Debug.WriteLine($"Added current state to states collection");
             }
             else
             {
@@ -80,6 +78,7 @@ namespace PathFinderToo.Vm
             Debug.WriteLine($"Got sorroundings of {currentlyChecking}:");
             sorroundings = RemoveVisited(sorroundings);
             OutputSquaresList(sorroundings);
+            sorroundings.ForEach(x => x.VisualType = VisualSquareType.Sorrounding);
             Debug.WriteLine($"Removed visited squares");
             last.Available.Remove(currentlyChecking);
             last.Available = last.Available.Distinct(new AStarSquareComparer()).ToList();
@@ -121,10 +120,18 @@ namespace PathFinderToo.Vm
             return newList;
         }
 
+        private async Task<int> GreedySearchSizeOnly(PFNode start, PFNode goal, int count = 0)
+        {
+            if (start == goal) return count;
+
+            List<PFNode> sorroundings = await CalculateSquareSorroundings(start, false);
+            return 0;
+        }
+
         #region A*
 
         // TODO: update UI components affected (put it in Calculate function for each of the squares)
-        private async Task<List<PFNode>> CalculateSquareSorroundings(PFNode square)
+        private async Task<List<PFNode>> CalculateSquareSorroundings(PFNode square, bool calcCosts = true)
         {
             var x = square.X;
             var y = square.Y;
@@ -157,16 +164,24 @@ namespace PathFinderToo.Vm
                 }
             }
 
-            foreach (var t in toCheck)
+            if (calcCosts)
             {
-                PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
-                tasks.Add(Task.Run(curr.AStarCalculateCosts));
-                toR.Add(curr);
-                if(curr.VisualType != VisualSquareType.StartEndPoint && curr.VisualType != VisualSquareType.Visited)
-                    curr.VisualType = VisualSquareType.Sorrounding;
+                foreach (var t in toCheck)
+                {
+                    PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
+                    tasks.Add(Task.Run(curr.AStarCalculateCosts));
+                    toR.Add(curr);
+                }
             }
-
-            SquaresList[x * 53 + y].VisualType = VisualSquareType.Visited;
+            else
+            {
+                foreach(var k in toCheck)
+                {
+                    toR.Add(SquaresList[k.Item1 * 53 + k.Item2]);
+                }
+                return toR;
+            }
+            
 
             await Task.WhenAll(tasks);
             return toR;

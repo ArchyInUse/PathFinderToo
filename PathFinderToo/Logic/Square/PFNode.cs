@@ -37,6 +37,8 @@ namespace PathFinderToo.Logic
             get => visualType;
             set
             {
+                if (this == StartPoint || this == EndPoint)
+                    return;
                 visualType = value;
                 NotifyPropertyChanged();
             }
