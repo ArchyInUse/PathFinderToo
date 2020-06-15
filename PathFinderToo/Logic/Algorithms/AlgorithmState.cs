@@ -16,7 +16,7 @@ namespace PathFinderToo.Logic.Algorithms
         public ObservableCollection<PFNode> Squares { get; set; }
         public List<PFNode> Available { get; set; }
         public PFNode CurrentlyChecking { get; set; }
-        public AlgorithmState Last { get; set; }
+        public AlgorithmState Last { get; set; } = null;
 
         public AlgorithmState(ObservableCollection<PFNode> squares, List<PFNode> available, PFNode currentlyChecking, AlgorithmState last)
         {

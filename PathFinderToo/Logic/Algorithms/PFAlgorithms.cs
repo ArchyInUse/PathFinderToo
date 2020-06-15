@@ -20,7 +20,7 @@ namespace PathFinderToo.Vm
         /// Disables the UI components for the algorithms to run
         /// should be a bool property
         /// </summary>
-        public void DisableAllUIComponents() { }
+        public void DisableUIComponents() { }
 
         private bool solved = false;
 
@@ -41,7 +41,7 @@ namespace PathFinderToo.Vm
         /* IGNORE FOR NOW */
         private AlgorithmState CurrentState = null;
         private ObservableCollection<AlgorithmState> States = new ObservableCollection<AlgorithmState>();
-        
+
         public async Task AStarAlgorithmSteppedAsync(AlgorithmState last = null)
         {
             // first time check
@@ -50,6 +50,7 @@ namespace PathFinderToo.Vm
                 last = new AlgorithmState(SquaresList, new List<PFNode>() { PFNode.StartPoint }, PFNode.StartPoint, null);
                 Debug.WriteLine($"Last:{Environment.NewLine}{last}");
                 PFNode.StartPoint.Visited = true;
+                PFNode.StartPoint.PreviousNode = null;
                 States.Add(CurrentState);
             }
             else
@@ -61,6 +62,16 @@ namespace PathFinderToo.Vm
             {
                 Debug.WriteLine($"Solution found");
                 solved = true;
+                var curr = PFNode.EndPoint;
+
+                for (; ; )
+                {
+                    if (curr.PreviousNode is null)
+                        break;
+                    if (curr != PFNode.StartPoint && curr != PFNode.EndPoint)
+                        curr.VisualType = VisualSquareType.FinishPath;
+                    curr = curr.PreviousNode;
+                }
                 return;
             }
             Debug.WriteLine($"Last checked square is not the endpoint, continue");
@@ -68,15 +79,24 @@ namespace PathFinderToo.Vm
             // calculate current square
             PFNode currentlyChecking = last.Available[0];
             Debug.WriteLine($"Currently checking the square {currentlyChecking}");
-            
+
             currentlyChecking.Visited = true;
 
-            // could be wrapped
+            // get valid sorroundings
             List<PFNode> sorroundings = await CalculateSquareSorroundings(currentlyChecking);
             Debug.WriteLine($"Got sorroundings of {currentlyChecking}:");
             sorroundings = RemoveVisited(sorroundings);
-            OutputSquaresList(sorroundings);
-            sorroundings.ForEach(x => x.VisualType = VisualSquareType.Sorrounding);
+            sorroundings.ForEach(x =>
+            {
+                if(x != PFNode.EndPoint && x != PFNode.StartPoint)
+                    x.VisualType = VisualSquareType.Sorrounding;
+            });
+            sorroundings.ForEach(x =>
+            {
+                if (x.PreviousNode is null)
+                    x.PreviousNode = currentlyChecking;
+            });
+
             Debug.WriteLine($"Removed visited squares");
             last.Available.Remove(currentlyChecking);
             last.Available = last.Available.Distinct(new AStarSquareComparer()).ToList();
@@ -88,20 +108,29 @@ namespace PathFinderToo.Vm
             Debug.WriteLine($"Added last's sorroundings and removed all visited.");
             CurrentState = new AlgorithmState(SquaresList, newAvailable, currentlyChecking, last);
             States.Add(CurrentState);
-            last.CurrentlyChecking.VisualType = VisualSquareType.Visited;
+
+            if(last.CurrentlyChecking != PFNode.StartPoint && last.CurrentlyChecking != PFNode.EndPoint)
+                last.CurrentlyChecking.VisualType = VisualSquareType.Visited;
+            if(currentlyChecking != PFNode.StartPoint && currentlyChecking != PFNode.EndPoint)
+                currentlyChecking.VisualType = VisualSquareType.Visited;
+
             Debug.WriteLine("");
             Debug.WriteLine($"CurrentAmountOfSquares = {newAvailable.Count}");
+
+            Step++;
+            MaxStep++;
+
+            //if (currentlyChecking != PFNode.StartPoint)
+            //{
+            //    currentlyChecking.PreviousNode = last.CurrentlyChecking;
+            //}
+            //else
+            //{
+            //    currentlyChecking.PreviousNode = null;
+            //}
         }
 
         #region Helpers
-
-        private void OutputSquaresList(List<PFNode> Sorroundings)
-        {
-            foreach(var s in Sorroundings)
-            {
-                Debug.WriteLine(s);
-            }
-        }
 
         private bool SquareIsWalkable(PFNode s) => s.Type != SquareType.Bomb && s.Type != SquareType.Wall;
         
@@ -118,14 +147,6 @@ namespace PathFinderToo.Vm
             return newList;
         }
 
-        private async Task<int> GreedySearchSizeOnly(PFNode start, PFNode goal, int count = 0)
-        {
-            if (start == goal) return count;
-
-            List<PFNode> sorroundings = await CalculateSquareSorroundings(start, false);
-            return 0;
-        }
-
         #region A*
 
         // TODO: update UI components affected (put it in Calculate function for each of the squares)
@@ -138,15 +159,15 @@ namespace PathFinderToo.Vm
             // this list is any square sorrounding the square that we need to check
             List<(int, int)> toCheck = new List<(int, int)>()
             {
-                (x + 1, y + 1),
+                //(x + 1, y + 1),
                 (x, y + 1),
-                (x - 1, y + 1),
+                //(x - 1, y + 1),
                 (x + 1, y),
                 (x, y),
                 (x - 1, y),
-                (x + 1, y - 1),
+                //(x + 1, y - 1),
                 (x, y - 1),
-                (x - 1, y - 1),
+                //(x - 1, y - 1),
             };
 
             // because we are removing elements in toCheck I'd like to avoid using the same list

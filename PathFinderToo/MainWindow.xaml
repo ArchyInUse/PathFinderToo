@@ -61,12 +61,14 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <!-- &lt; == < -->
-                <Button Content="&lt;&lt;"/>
+                <Button Content="&lt;&lt;"
+                        Command="{Binding DecreaseStepButtonCommand}"/>
                 <TextBox IsEnabled="False" 
-                         Text="0"
+                         Text="{Binding Step}"
                          TextAlignment="Center"
                          Grid.Column="1"/>
                 <Button Content=">>"
+                        Command="{Binding IncreaseStepButtonCommand}"
                         Grid.Column="2"/>
             </Grid>
         </StackPanel>
@@ -87,9 +89,15 @@
                     Margin="0 10 0 0" Command="{Binding EPButtonClickCommand}">
                 <TextBlock Text="End Point" Foreground="Black"/>
             </Button>
+            <Button Height="100" Margin="0 10 0 0" Command="{Binding SEButtonClickCommand}">
+                <TextBlock Text="Strong Empty" Foreground="Black"/>
+            </Button>
             <Button Height="100" Margin="0 10 0 0" Command="{Binding StartButtonClickCommand}">
                 <TextBlock Text="Start" Foreground="Black"/>
             </Button>
+            <ToggleButton Height="100" Margin="0 10 0 0" IsChecked="{Binding SteppedMode, Mode=OneWayToSource}">
+                <TextBlock Text="Stepped Mode" Foreground="Black"/>
+            </ToggleButton>
         </StackPanel>
         <Viewbox x:Name="ZoomViewbox" Height="800" Width="800" Stretch="Fill" Grid.Row="1">
             <ItemsControl x:Name="ItemsPanel" ItemsSource="{Binding SquaresList}" Margin="10">

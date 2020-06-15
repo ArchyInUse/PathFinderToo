@@ -36,11 +36,17 @@ namespace PathFinderToo
             DataContext = Vm;
         }
 
+        private void Reset()
+        {
+            Vm = new PFViewModel(ItemsPanel);
+            DataContext = Vm;
+        }
+
         private async void OnKeyPress(object sender, KeyEventArgs args)
         {
             if (args.Key == Key.Z)
             {
-                await Task.Run(Vm.SquaresList.ResetBoard);
+                Reset();
             }
             else if (args.Key == Key.Enter)
             {

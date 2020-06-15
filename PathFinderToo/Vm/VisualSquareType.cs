@@ -6,10 +6,13 @@
     public enum VisualSquareType
     {
         Empty,
+        StrongEmpty,
         Wall,
         Bomb,
-        StartEndPoint,
+        StartPoint,
+        EndPoint,
         Sorrounding,
-        Visited
+        Visited,
+        FinishPath
     }
 }

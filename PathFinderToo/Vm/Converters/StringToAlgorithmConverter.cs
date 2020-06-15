@@ -16,6 +16,7 @@ namespace PathFinderToo.Vm.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var item = (ComboBoxItem)value;
+            if (item == null) return "";
 
             switch (item.Content)
             {

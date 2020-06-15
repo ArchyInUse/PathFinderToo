@@ -37,7 +37,16 @@ namespace PathFinderToo.Vm
             }
         }
 
-        public static bool SteppedMode = true;
+        private bool steppedMode = false;
+        public bool SteppedMode
+        {
+            get => steppedMode;
+            set
+            {
+                steppedMode = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         private Point mousePos;
         public Point MousePos
@@ -49,7 +58,20 @@ namespace PathFinderToo.Vm
                 NotifyPropertyChanged();
             }
         }
-        
+
+        private int step = 1;
+        public int Step
+        {
+            get => step;
+            set
+            {
+                step = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        public int MaxStep { get; set; } = 1;
+
         public PFViewModel(ItemsControl itemsControl)
         {
             SquaresList = new ObservableCollection<PFNode>();

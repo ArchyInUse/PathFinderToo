@@ -37,9 +37,8 @@ namespace PathFinderToo.Logic
             get => visualType;
             set
             {
-                if (this == StartPoint || this == EndPoint)
-                    return;
                 visualType = value;
+                Type = visualType.GetTypeFromVisual();
                 NotifyPropertyChanged();
             }
         }
@@ -49,12 +48,15 @@ namespace PathFinderToo.Logic
         public int X { get; set; }
         public int Y { get; set; }
         public bool Visited { get; set; }
+        public int Cost { get; set; } = 1;
         public static PFNode StartPoint;
         public static PFNode EndPoint;
 
         #endregion
 
         #region A* Path Finding Algorithm Components
+
+        public PFNode PreviousNode { get; set; } = null;
 
         /// Distance from starting node
         public double GCost { get; set; }
@@ -70,20 +72,21 @@ namespace PathFinderToo.Logic
         
         public void AStarCalculateCosts()
         {
-            GCost = CalculateGCost();
             HCost = CalculateHCost();
+            var node = this;
+            double currentCost = 0;
+            while (!(node is null))
+            {
+                currentCost += node.Cost;
+                node = node.PreviousNode;
+            }
+            GCost = currentCost;
         }
         
         public void DjikstrasCalculateCosts()
         {
             GCost = 0;
             HCost = CalculateHCost();
-        }
-
-        // this temporarily returns 0 while I figure out how to correctly calculate a path between this point and the 
-        private double CalculateGCost()
-        {
-            return 0;
         }
 
         private double CalculateHCost()
@@ -135,6 +138,7 @@ namespace PathFinderToo.Logic
 
         public static bool operator==(PFNode p1, PFNode p2)
         {
+            if (p1 is null || p2 is null) return false;
             return (p1.X, p1.Y) == (p2.X, p2.Y);
         }
 

@@ -42,32 +42,30 @@ namespace PathFinderToo.Logic
             switch (PFViewModel.EditingState)
             {
                 case EditingState.Wall:
-                    Type = SquareType.Wall;
                     VisualType = VisualSquareType.Wall;
                     break;
                 case EditingState.StartPoint:
-                    Type = SquareType.StartPoint;
-                    VisualType = VisualSquareType.StartEndPoint;
+                    VisualType = VisualSquareType.StartPoint;
                     if((X,Y) != (StartPoint.X, StartPoint.Y))
                     {
-                        StartPoint.Type = SquareType.Empty;
                         StartPoint.VisualType = VisualSquareType.Empty;
                         StartPoint = this;
                     }
                     break;
                 case EditingState.EndPoint:
-                    Type = SquareType.EndPoint;
-                    VisualType = VisualSquareType.StartEndPoint;
+                    VisualType = VisualSquareType.EndPoint;
                     if ((X,Y) != (EndPoint.X, EndPoint.Y))
                     {
-                        EndPoint.Type = SquareType.Empty;
                         EndPoint.VisualType = VisualSquareType.Empty;
                         EndPoint = this;
                     }
                     break;
                 case EditingState.Bomb:
-                    Type = SquareType.Bomb;
                     VisualType = VisualSquareType.Bomb;
+                    break;
+                case EditingState.StrongEmpty:
+                    VisualType = VisualSquareType.StrongEmpty;
+                    Cost = 2;
                     break;
             }
 
@@ -83,7 +81,7 @@ namespace PathFinderToo.Logic
 
         private void OnRightMouseDown()
         {
-            Type = SquareType.Empty;
+            Cost = 1;
             VisualType = VisualSquareType.Empty;
         }
     }

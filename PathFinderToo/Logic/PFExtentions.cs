@@ -33,43 +33,14 @@ namespace PathFinderToo.Logic
             PFNode.StartPoint = new PFNode(-1, -1);
         }
 
-        // TODO: Test this
-        public static PFNode[,] To2D(this ObservableCollection<PFNode> board)
-        {
-            PFNode[,] toR = new PFNode[53, 53];
-            for(int i = 0; i < 53; i++)
-            {
-                int mult = i;
-                if (mult == 0) mult = 1;
-
-                for(int j = 0; j < 53; j++)
-                {
-                    toR[i,j] = board[mult * j];
-                }
-            }
-            return toR;
-        }
-
-        public static SolidColorBrush GetColor(this SquareType type)
-        {
-            switch(type)
-            {
-                case SquareType.Empty:
-                    return new SolidColorBrush(Colors.LightGray);
-                case SquareType.EndPoint:
-                case SquareType.StartPoint:
-                    return new SolidColorBrush(Colors.Turquoise);
-                case SquareType.Wall:
-                    return new SolidColorBrush(Colors.Black);
-                default:
-                    return new SolidColorBrush(Colors.Green);
-            }
-        }
-
         public static SquareType GetTypeFromVisual(this VisualSquareType type)
         {
             switch(type)
             {
+                case VisualSquareType.StartPoint:
+                    return SquareType.StartPoint;
+                case VisualSquareType.EndPoint:
+                    return SquareType.EndPoint;
                 case VisualSquareType.Empty:
                 case VisualSquareType.Visited:
                 case VisualSquareType.Sorrounding:
@@ -78,6 +49,8 @@ namespace PathFinderToo.Logic
                     return SquareType.Bomb;
                 case VisualSquareType.Wall:
                     return SquareType.Wall;
+                case VisualSquareType.StrongEmpty:
+                    return SquareType.StrongEmpty;
                 default:
                     return SquareType.Empty;
             }
@@ -91,12 +64,18 @@ namespace PathFinderToo.Logic
                     return new SolidColorBrush(Colors.LightGray);
                 case VisualSquareType.Wall:
                     return new SolidColorBrush(Colors.Black);
+                case VisualSquareType.StrongEmpty:
+                    return new SolidColorBrush(Colors.DarkMagenta);
                 case VisualSquareType.Visited:
                     return new SolidColorBrush(Colors.Red);
                 case VisualSquareType.Sorrounding:
                     return new SolidColorBrush(Colors.Green);
-                case VisualSquareType.StartEndPoint:
+                case VisualSquareType.StartPoint:
+                    return new SolidColorBrush(Colors.Coral);
+                case VisualSquareType.EndPoint:
                     return new SolidColorBrush(Colors.Cyan);
+                case VisualSquareType.FinishPath:
+                    return new SolidColorBrush(Colors.Yellow);
                 default:
                     return new SolidColorBrush(Colors.Turquoise);
             }

@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using PathFinderToo.Logic;
+using PathFinderToo.Logic.Algorithms;
 
 namespace PathFinderToo.Vm
 {
@@ -28,12 +29,15 @@ namespace PathFinderToo.Vm
         }
         #endregion
 
+        public Command DecreaseStepButtonCommand { get; set; }
+        public Command IncreaseStepButtonCommand { get; set; }
         public Command StartButtonClickCommand { get; set; }
         public Command WallButtonClickCommand { get; set; }
         // SP stands for Start Point
         public Command SPButtonClickCommand { get; set; }
         // EP stands for End Point
         public Command EPButtonClickCommand { get; set; }
+        public Command SEButtonClickCommand { get; set; }
 
         private void InitEvents()
         {
@@ -41,19 +45,40 @@ namespace PathFinderToo.Vm
             SPButtonClickCommand = new Command(SPButtonClick);
             EPButtonClickCommand = new Command(EPButtonClick);
             StartButtonClickCommand = new Command(AlgorithmButtonClick);
+            DecreaseStepButtonCommand = new Command(DecreaseStepButtonClick);
+            IncreaseStepButtonCommand = new Command(IncreaseStepButtonClick);
+            SEButtonClickCommand = new Command(SEButtonClick);
         }
+        private void DecreaseStepButtonClick()
+        {
+            if (Step > 1)
+                Step--;
+        }
+        private void IncreaseStepButtonClick()
+        {
+            if(Step < MaxStep)
+                Step++;
+        }
+        private async void AlgorithmButtonClick()
+        {
+            // check for start and end points
+            if (PFNode.StartPoint.X == -1)
+                throw new NodeNotSetException(PFNode.StartPoint);
+            if (PFNode.EndPoint.Y == -1)
+                throw new NodeNotSetException(PFNode.EndPoint);
 
+            if(SteppedMode)
+            {
+                await AStarAlgorithmSteppedAsync(CurrentState);
+            }
+            else
+            {
+                await AStarAlgorithmAsync();
+            }
+        }
+        private void SEButtonClick() => EditingState = EditingState.StrongEmpty;
         private void WallButtonClick() => EditingState = EditingState.Wall;
         private void SPButtonClick() => EditingState = EditingState.StartPoint;
         private void EPButtonClick() => EditingState = EditingState.EndPoint;
-        private async void AlgorithmButtonClick()
-        {
-            if(PFNode.StartPoint.X == -1 || PFNode.EndPoint.Y == -1)
-            {
-                throw new Exception("Endpoint or Startpoint not set.");
-            }
-            //await AStarAlgorithmSteppedAsync(CurrentState);
-            await AStarAlgorithmAsync();
-        }
     }
 }
