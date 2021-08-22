@@ -110,26 +110,27 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type logic:PFNode}">
-                    <Rectangle Width="15"
+                        <Rectangle Width="15"
                                Height="15"
                                Fill="{Binding Path=VisualType, 
                                     UpdateSourceTrigger=PropertyChanged,
                                     Mode=OneWay,
                                     Converter={StaticResource FillConverter}}"
                                Margin="{Binding Margin}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseEnter">
-                                <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="MouseDown">
-                                <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
-                            </i:EventTrigger>
-                            <i:EventTrigger EventName="MouseRightButtonDown">
-                                <i:InvokeCommandAction Command="{Binding OnMouseRightCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </Rectangle>
-                </DataTemplate>
+
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseEnter">
+                                    <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseDown">
+                                    <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
+                                </i:EventTrigger>
+                                <i:EventTrigger EventName="MouseRightButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding OnMouseRightCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </Rectangle>
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         </paz:ZoomBorder>
