@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using PathFinderToo.Logic;
 using PathFinderToo.Logic.Algorithms;
+using Wpf.Controls.PanAndZoom;
 
 namespace PathFinderToo.Vm
 {
@@ -72,13 +64,14 @@ namespace PathFinderToo.Vm
 
         public int MaxStep { get; set; } = 1;
 
-        public PFViewModel(ItemsControl itemsControl)
+        public PFViewModel(ItemsControl itemsControl, ZoomBorder zoomBorder)
         {
             SquaresList = new ObservableCollection<PFNode>();
             SquaresList.ResetBoard();
             SquaresItemControl = itemsControl;
             SquaresItemControl.MouseDown += PanelMouseDown;
             SquaresItemControl.MouseMove += PanelMouseMove;
+            // this function is in PFVMEvents.cs
             InitEvents();
         }
 

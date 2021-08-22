@@ -47,7 +47,7 @@ namespace PathFinderToo.Vm
             // first time check
             if (last is null)
             {
-                last = new AlgorithmState(SquaresList, new List<PFNode>() { PFNode.StartPoint }, PFNode.StartPoint, null);
+                last = new AlgorithmState(new ObservableCollection<PFNode>(SquaresList), new List<PFNode>() { PFNode.StartPoint }, PFNode.StartPoint, null);
                 Debug.WriteLine($"Last:{Environment.NewLine}{last}");
                 PFNode.StartPoint.Visited = true;
                 PFNode.StartPoint.PreviousNode = null;
@@ -185,11 +185,33 @@ namespace PathFinderToo.Vm
 
             if (calcCosts)
             {
-                foreach (var t in toCheck)
+                if (SelectedAlgorithmType == AlgorithmType.AStar)
                 {
-                    PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
-                    tasks.Add(Task.Run(curr.AStarCalculateCosts));
-                    toR.Add(curr);
+                    foreach (var t in toCheck)
+                    {
+                        PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
+                        tasks.Add(Task.Run(curr.AStarCalculateCosts));
+                        toR.Add(curr);
+                    }
+                }
+                else if(SelectedAlgorithmType == AlgorithmType.Djikstras)
+                {
+                    foreach(var t in toCheck)
+                    {
+                        PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
+                        tasks.Add(Task.Run(curr.DjikstrasCalculateCosts));
+                        toR.Add(curr);
+                    }
+                }
+                else
+                {
+                    // THIS IS TEMPORARY
+                    foreach (var t in toCheck)
+                    {
+                        PFNode curr = SquaresList[t.Item1 * 53 + t.Item2];
+                        tasks.Add(Task.Run(curr.AStarCalculateCosts));
+                        toR.Add(curr);
+                    }
                 }
             }
             else

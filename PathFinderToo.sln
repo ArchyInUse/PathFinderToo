@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.757
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathFinderToo", "PathFinderToo\PathFinderToo.csproj", "{05DF6669-4A27-41C7-A58B-F82F96A46DEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "wpfTests", "wpfTests\wpfTests.csproj", "{A1A17521-3197-4E06-A0E7-DB57E2B63333}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{05DF6669-4A27-41C7-A58B-F82F96A46DEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{05DF6669-4A27-41C7-A58B-F82F96A46DEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05DF6669-4A27-41C7-A58B-F82F96A46DEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1A17521-3197-4E06-A0E7-DB57E2B63333}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1A17521-3197-4E06-A0E7-DB57E2B63333}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1A17521-3197-4E06-A0E7-DB57E2B63333}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1A17521-3197-4E06-A0E7-DB57E2B63333}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

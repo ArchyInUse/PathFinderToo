@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PathFinderToo.Vm;
 using System.Threading;
+using Wpf.Controls.PanAndZoom;
+using System.Diagnostics;
 
 namespace PathFinderToo
 {
@@ -30,15 +32,14 @@ namespace PathFinderToo
         {
             UiCtx = SynchronizationContext.Current;
             InitializeComponent();
-            var window = GetWindow(this);
-            window.KeyDown += OnKeyPress;
-            Vm = new PFViewModel(ItemsPanel);
+            this.KeyDown += OnKeyPress;
+            Vm = new PFViewModel(ItemsPanel, ZoomViewbox);
             DataContext = Vm;
         }
 
         private void Reset()
         {
-            Vm = new PFViewModel(ItemsPanel);
+            Vm = new PFViewModel(ItemsPanel, ZoomViewbox);
             DataContext = Vm;
         }
 
@@ -58,8 +59,14 @@ namespace PathFinderToo
             }
         }
 
+        /// <summary>
+        /// This event's reason is for displaying the numeric values on each of the squares.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            Vm.OnMouseWheel();
         }
     }
 }

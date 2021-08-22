@@ -26,8 +26,6 @@ namespace PathFinderToo.Logic
             }
         }
         
-        public int Width { get; set; } = 15;
-        public int Height { get; set; } = 15;
         public Thickness Margin { get; set; } = new Thickness(0.3, 0.3, 0, 0);
         public SquareType Type { get; set; }
 
@@ -48,7 +46,7 @@ namespace PathFinderToo.Logic
         public int X { get; set; }
         public int Y { get; set; }
         public bool Visited { get; set; }
-        public int Cost { get; set; } = 1;
+        public int Cost { get; set; } = 2;
         public static PFNode StartPoint;
         public static PFNode EndPoint;
 
@@ -60,7 +58,7 @@ namespace PathFinderToo.Logic
 
         /// Distance from starting node
         public double GCost { get; set; }
-        
+
         /// Distance from end node
         public double HCost { get; set; }
         
@@ -97,7 +95,6 @@ namespace PathFinderToo.Logic
             var y2 = Y;
 
             return Distance(x1, x2, y1, y2);
-            
         }
 
         private double Distance(double x1, double x2, double y1, double y2)
@@ -125,6 +122,17 @@ namespace PathFinderToo.Logic
         public PFNode()
         {
             Fill = new SolidColorBrush(Colors.LightGray);
+            InitEvents();
+        }
+
+        public PFNode(PFNode other)
+        {
+            VisualType = other.VisualType;
+            X = other.X;
+            Y = other.Y;
+            Visited = other.Visited;
+            Cost = other.Cost;
+
             InitEvents();
         }
 

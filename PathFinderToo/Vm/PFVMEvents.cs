@@ -49,15 +49,30 @@ namespace PathFinderToo.Vm
             IncreaseStepButtonCommand = new Command(IncreaseStepButtonClick);
             SEButtonClickCommand = new Command(SEButtonClick);
         }
+        
+        /// <summary>
+        /// Checks if zoom border's zoom is high/low enough to enable/disable the detailed values
+        /// </summary>
+        public void OnMouseWheel()
+        {
+
+        }
         private void DecreaseStepButtonClick()
         {
             if (Step > 1)
+            {
                 Step--;
+                SquaresList = States[Step - 1].Squares;
+                NotifyPropertyChanged(nameof(SquaresList));
+            }
         }
         private void IncreaseStepButtonClick()
         {
-            if(Step < MaxStep)
+            if (Step < MaxStep)
+            {
                 Step++;
+                SquaresList = States[Step - 1].Squares;
+            }
         }
         private async void AlgorithmButtonClick()
         {

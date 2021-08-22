@@ -65,7 +65,7 @@ namespace PathFinderToo.Logic
                     break;
                 case EditingState.StrongEmpty:
                     VisualType = VisualSquareType.StrongEmpty;
-                    Cost = 2;
+                    Cost *= 2;
                     break;
             }
 
