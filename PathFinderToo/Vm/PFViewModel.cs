@@ -64,7 +64,7 @@ namespace PathFinderToo.Vm
 
         public int MaxStep { get; set; } = 1;
 
-        public PFViewModel(ItemsControl itemsControl, ZoomBorder zoomBorder)
+        public PFViewModel(ItemsControl itemsControl)
         {
             SquaresList = new ObservableCollection<PFNode>();
             SquaresList.ResetBoard();

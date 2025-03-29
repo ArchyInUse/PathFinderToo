@@ -33,13 +33,14 @@ namespace PathFinderToo
             UiCtx = SynchronizationContext.Current;
             InitializeComponent();
             this.KeyDown += OnKeyPress;
-            Vm = new PFViewModel(ItemsPanel, ZoomViewbox);
+
+            Vm = new PFViewModel(ItemsPanel);
             DataContext = Vm;
         }
 
         private void Reset()
         {
-            Vm = new PFViewModel(ItemsPanel, ZoomViewbox);
+            Vm = new PFViewModel(ItemsPanel);
             DataContext = Vm;
         }
 
@@ -66,7 +67,7 @@ namespace PathFinderToo
         /// <param name="e"></param>
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            Vm.OnMouseWheel();
+            //Vm.OnMouseWheel();
         }
     }
 }

@@ -100,9 +100,9 @@
                 <TextBlock Text="Stepped Mode" Foreground="Black"/>
             </ToggleButton>
         </StackPanel>
-        <paz:ZoomBorder x:Name="ZoomViewbox" Height="800" Width="800" Stretch="Fill" Grid.Row="1"
-                        MinZoomX="1" MinZoomY="1">
-            <ItemsControl x:Name="ItemsPanel" ItemsSource="{Binding SquaresList}" Margin="10">
+
+        <ItemsControl x:Name="ItemsPanel" ItemsSource="{Binding SquaresList}" Margin="10"
+                      Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid IsItemsHost="True" Rows="53" Columns="53"/>
@@ -110,29 +110,28 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type logic:PFNode}">
-                        <Rectangle Width="15"
+                    <Border Width="15"
                                Height="15"
-                               Fill="{Binding Path=VisualType, 
+                               Background="{Binding Path=VisualType, 
                                     UpdateSourceTrigger=PropertyChanged,
                                     Mode=OneWay,
                                     Converter={StaticResource FillConverter}}"
                                Margin="{Binding Margin}">
 
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseEnter">
-                                    <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseDown">
-                                    <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
-                                </i:EventTrigger>
-                                <i:EventTrigger EventName="MouseRightButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding OnMouseRightCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </Rectangle>
-                    </DataTemplate>
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseEnter">
+                                <i:InvokeCommandAction Command="{Binding OnMouseEnterCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseDown">
+                                <i:InvokeCommandAction Command="{Binding OnMouseDownCommand}"/>
+                            </i:EventTrigger>
+                            <i:EventTrigger EventName="MouseRightButtonDown">
+                                <i:InvokeCommandAction Command="{Binding OnMouseRightCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Border>
+                </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
-        </paz:ZoomBorder>
     </Grid>
 </Window>
